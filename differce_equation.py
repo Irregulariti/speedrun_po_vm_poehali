@@ -1,6 +1,6 @@
 from common_fraction import *
 from quadratic_equation import QuadEquation
-
+from simple_operations import remove_brackets
 
 class DiffEquation:
     equation: str
@@ -8,6 +8,8 @@ class DiffEquation:
     order: int
     char_root1: int
     char_root2: int
+    kft: list
+    cft: list
 
     def __init__(self, equation: str, alphabet: list):
         self.equation = equation
@@ -38,12 +40,16 @@ class DiffEquation:
                 temp.append(eq[start_index + 1:i])
                 k = ""
 
+        self.kft = kft
         cft = []
+
         for string in temp:
             c = 0
             if '+' in string:
                 c = int(string[string.find("+") + 1:])
             cft.append(c)
+
+        self.cft = cft
         self.order = max(cft) - min(cft)
 
         construct = ""
@@ -85,12 +91,25 @@ class DiffEquation:
                 if temp[i - 1] != char:
                     polynom += chr(ind)
                 ind += 1
-        return polynom
+        return polynom, char
 
-    def substitution(self):
-        polynom = self.polynom()
+    def substitution(self, polynom, char):
         eq = self.equation
-        for i in range(len(eq)):
-            if eq[i] == 'Z':
+        kft = self.kft
+        cft = self.cft
+        done = ""
+        for i in range(len(cft)):
+            k = str(kft[i])
+            if int(k) >= 0:
+                k = '+' + k
+            prefix = polynom.replace(char, "(" + char + "+" + str(cft[i]) + ")")
+            if cft[i] == 0:
+                prefix = polynom
+            if int(k)==1 and i == 0:
+                done+= prefix
+                continue
+            done += k + '(' + prefix + ")"
+        remove_brackets(done,self.alphabet)
+        return done
 
-        print(eq)
+
