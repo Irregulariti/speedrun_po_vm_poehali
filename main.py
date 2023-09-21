@@ -5,6 +5,5 @@ if __name__ == '__main__':
     alphabet = input().split()
     diff = DiffEquation(s,alphabet)
     print(diff.parse())
-    polynom,char = diff.polynom()
-    print(diff.substitution(polynom,char))
+    print(diff.substitution())
     print("")

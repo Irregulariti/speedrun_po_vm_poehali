@@ -4,10 +4,20 @@ import math
 class CF:
     num: int
     den: int
+    evaluate: str
 
     def __init__(self, num, den):
-        num = num
-        den = den
+        self.num = num
+        self.den = den
+        self.__eval__()
+
+    def __eval__(self):
+        if self.den == 1:
+            self.evaluate = str(self.num)
+        elif self.num / self.den == self.num // self.den:
+            self.evaluate = str(self.num // self.den)
+        else:
+            self.evaluate = str(self.num) + '/' + str(self.den)
 
 
 def general(a: CF, b: CF):
@@ -33,4 +43,5 @@ def reduce(a: CF):
     if gcd != 1:
         a.num = a.num // gcd
         a.den = a.den // gcd
+    a.__eval__()
     return a

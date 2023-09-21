@@ -2,8 +2,10 @@ from common_fraction import *
 from quadratic_equation import QuadEquation
 from simple_operations import remove_brackets
 
+
 class DiffEquation:
     equation: str
+    list_equation: list
     alphabet: list
     order: int
     char_root1: int
@@ -39,10 +41,14 @@ class DiffEquation:
             elif eq[i] == ']':
                 temp.append(eq[start_index + 1:i])
                 k = ""
-
+        print(kft)
+        l = []
+        for i in kft:
+            l.append(CF(i, 1))
+        self.list_equation = l
         self.kft = kft
         cft = []
-
+        print(l)
         for string in temp:
             c = 0
             if '+' in string:
@@ -93,7 +99,8 @@ class DiffEquation:
                 ind += 1
         return polynom, char
 
-    def substitution(self, polynom, char):
+    def substitution(self):
+        polynom,char = self.polynom()
         eq = self.equation
         kft = self.kft
         cft = self.cft
@@ -109,7 +116,5 @@ class DiffEquation:
                 done+= prefix
                 continue
             done += k + '(' + prefix + ")"
-        remove_brackets(done,self.alphabet)
+        print(remove_brackets(done,self.alphabet))
         return done
-
-
